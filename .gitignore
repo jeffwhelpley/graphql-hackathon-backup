@@ -1,0 +1,14 @@
+logs
+*.log
+npm-debug.log*
+pids
+*.pid
+*.seed
+*.pid.lock
+lib-cov
+coverage
+node_modules
+jspm_packages
+.npm
+*.tgz
+.idea/
