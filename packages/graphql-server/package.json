@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "rm -rf __build__ && rm -rf node_modules && yarn && tsc || true",
-    "lint": "tslint -c ../../tslint.json src/**/*.ts src/*.ts test/**/*.ts test/*.ts || true",
+    "lint": "tslint -c tslint.json src/**/*.ts src/*.ts test/**/*.ts test/*.ts || true",
     "test": "mocha __build__/test/**/*.spec.js || true",
     "start": "node $NODE_DEBUG_OPTION __build__/src/graphql-server.start || true"
   },
