@@ -8,4 +8,5 @@ It was based off the [general Hackathon repo](https://github.com/robzhu/graphql-
 
 1. `git clone git@github.com:jeffwhelpley/graphql-hackathon.git`
 2. `cd graphql-hackathon`
-3. `npm i`
+3. `npm i -g lerna mocha typescript tslint`
+4. ``
