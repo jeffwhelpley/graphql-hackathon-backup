@@ -43,13 +43,11 @@ export class AppComponent implements OnInit {
     this.books = this.bookService.getBooks();
   }
 
-  // todo: get UI to update automatically
-
   addBook(book: Book) {
     this.bookService.addBook(book)
       .subscribe(() => {
         this.newBook = {};
-      })
+      });
   }
 }
 
