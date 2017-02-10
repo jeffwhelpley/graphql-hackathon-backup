@@ -3,25 +3,25 @@ import { authors, books } from './db';
 
 const schema = `
     type Author {
-        id: String!
-        name: String!
-        image: String!
+        id: String
+        name: String
+        image: String
         books: [Book]
     }
     type Book {
-        id: String!
-        title: String!
-        image: String!
-        authorId: String!
-        description: String!
+        id: String
+        title: String
+        image: String
+        authorId: String
+        description: String
         author: Author
     }
     input BookInput {
-        id: String!
-        title: String!
-        image: String!
-        description: String!
-        authorId: String!
+        id: String
+        title: String
+        image: String
+        description: String
+        authorId: String
     }
     type QueryRoot {
         authors: [Author]

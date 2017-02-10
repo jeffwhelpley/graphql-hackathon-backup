@@ -1,16 +1,16 @@
 
 export interface Author {
-  id?: string;
+  id?: number;
   name?: string;
   image?: string;
   books?: Book[];
 }
 
 export interface Book {
-  id?: string;
+  id?: number;
   title?: string;
   image?: string;
-  authorId?: string;
+  authorId?: number;
   description?: string;
   author?: Author;
 }
