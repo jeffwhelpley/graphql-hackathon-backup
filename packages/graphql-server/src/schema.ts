@@ -45,6 +45,19 @@ const schema = `
 `;
 
 const resolvers = {
+    Author: {
+        id: (author: any) => `author-${author.id}`,
+        books: (author: any) => {
+            const authorsBooks = books.filter(
+                book => book.authorId === author.id
+            );
+            return authorsBooks;
+        }
+    },
+    Book: {
+        id: (book: any) => `book-${book.id}`,
+        author: (book: any) => authors[book.authorId]
+    },
     QueryRoot: {
         authors: () => {
             return authors;
@@ -68,6 +81,12 @@ const resolvers = {
             }
             return 'who are you?';
         },
+    },
+    MutationRoot: {
+        addBook: (object: any, {book}: any) => {
+            books.push(book);
+            return book;
+        }
     }
 };
 
