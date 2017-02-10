@@ -15,7 +15,9 @@
     "cors": "^2.7.1",
     "express": "^4.14.0",
     "express-graphql": "^0.6.3",
-    "graphql": "^0.9.1"
+    "graphql": "^0.9.1",
+    "graphql-subscriptions": "^0.3.0",
+    "graphql-tools": "^0.10.0"
   },
   "scripts": {
     "build": "rm -rf __build__ && rm -rf node_modules && yarn && tsc || true",

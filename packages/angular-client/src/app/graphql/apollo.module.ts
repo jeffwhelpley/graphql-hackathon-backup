@@ -11,5 +11,6 @@ export function getClient() {
         credentials: 'same-origin',
       },
     }),
+    dataIdFromObject: o => o['id'],
   });
 }
