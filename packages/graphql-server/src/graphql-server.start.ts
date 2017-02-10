@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as cors from 'cors';
 import * as graphqlHTTP from 'express-graphql';
 import * as auth from 'basic-auth';
-import { schema } from './schema';
+import schema from './schema';
 
 const app = express();
 

@@ -33,7 +33,7 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
-"@types/graphql@^0.8.6":
+"@types/graphql@^0.8.5", "@types/graphql@^0.8.6":
   version "0.8.6"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.8.6.tgz#b34fb880493ba835b0c067024ee70130d6f9bb68"
 
@@ -103,6 +103,10 @@ depd@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.0.tgz#e1bd82c6aab6ced965b97b88b17ed3e528ca18c3"
 
+deprecated-decorator@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/deprecated-decorator/-/deprecated-decorator-0.1.6.tgz#00966317b7a12fe92f3cc831f7583af329b86c37"
+
 destroy@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
@@ -114,6 +118,10 @@ ee-first@1.1.1:
 encodeurl@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.1.tgz#79e3d58655346909fe6f0f45a5de68103b294d20"
+
+es6-promise@^3.2.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-3.3.1.tgz#a08cdde84ccdbf34d027a1451bc91d4bcd28a613"
 
 escape-html@~1.0.3:
   version "1.0.3"
@@ -181,6 +189,22 @@ fresh@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.3.0.tgz#651f838e22424e7566de161d8358caa199f83d4f"
 
+graphql-subscriptions@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/graphql-subscriptions/-/graphql-subscriptions-0.3.0.tgz#5c25673f6e1570c8474ac31b6505a3d0b07b4371"
+  dependencies:
+    es6-promise "^3.2.1"
+
+graphql-tools@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-0.10.0.tgz#9c56c8cc69f319049c02ffe9a0a138df30571761"
+  dependencies:
+    deprecated-decorator "^0.1.6"
+    lodash "^4.3.0"
+    uuid "^3.0.1"
+  optionalDependencies:
+    "@types/graphql" "^0.8.5"
+
 graphql@^0.9.1:
   version "0.9.1"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.9.1.tgz#f4d154cbec054d4a5d3b1be95f23435c09aa86c8"
@@ -210,6 +234,10 @@ ipaddr.js@1.2.0:
 iterall@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.0.3.tgz#e0b31958f835013c323ff0b10943829ac69aa4b7"
+
+lodash@^4.3.0:
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -335,6 +363,10 @@ unpipe@1.0.0, unpipe@~1.0.0:
 utils-merge@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.0.tgz#0294fb922bb9375153541c4f7096231f287c8af8"
+
+uuid@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
 
 vary@^1, vary@~1.1.0:
   version "1.1.0"
