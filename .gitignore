@@ -12,3 +12,7 @@ jspm_packages
 .npm
 *.tgz
 .idea/
+/packages/angular-client/dist
+/packages/angular-client/node_modules
+/packages/graphql-server/__build__
+/packages/graphql-server/node_modules
