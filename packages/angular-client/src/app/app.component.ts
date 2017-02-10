@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Apollo, ApolloQueryObservable } from 'apollo-angular';
-import gql from 'graphql-tag';
-import 'rxjs/add/operator/map';
+import { AuthorService, BookService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -12,41 +10,25 @@ import 'rxjs/add/operator/map';
         {{author.id}} - {{author.name}}
       </li>
     </ul>
+    <h1>Books</h1>
+    <ul>
+      <li *ngFor="let book of books | async">
+        {{book.title}} by {{book.author.name}}
+      </li>
+    </ul>
   `,
 })
 export class AppComponent implements OnInit {
-  public authors: ApolloQueryObservable<GetAuthorsQueryResult>;
+  public authors: any;
+  public books: any;
 
-  constructor(private apollo: Apollo) {}
+  constructor(
+    private authorService: AuthorService,
+    private bookService: BookService
+  ) {}
 
   public ngOnInit() {
-    this.authors = this.apollo.watchQuery<GetAuthorsQueryResult>({
-      query: gql`
-        {
-          authors {
-            id,
-            name, 
-            books { 
-              id 
-            }
-          }
-        }
-      `
-    })
-      .map(result => result.data.authors) as any;
+    this.authors = this.authorService.getAuthors();
+    this.books = this.bookService.getBooks();
   }
-}
-
-interface Book {
-  id: string;
-}
-
-interface Author {
-  id: string;
-  name: string;
-  books: Book[];
-}
-
-interface GetAuthorsQueryResult {
-  authors: Author[];
 }

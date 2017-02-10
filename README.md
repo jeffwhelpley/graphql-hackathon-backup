@@ -8,5 +8,9 @@ It was based off the [general Hackathon repo](https://github.com/robzhu/graphql-
 
 1. `git clone git@github.com:jeffwhelpley/graphql-hackathon.git`
 2. `cd graphql-hackathon`
-3. `npm i -g lerna mocha typescript tslint @angular/cli`
-4. ``
+3. `npm i -g lerna nodemon concurrently typescript tslint @angular/cli`
+4. `lerna run build`
+5. open up two terminal windows:
+  * in one, cd to `packages/graphql-server` and then run `npm start`
+  * in the other, cd to `packages/angular-client` and run `ng serve`
+6. open your browser to [http://localhost:4200](http://localhost:4200)

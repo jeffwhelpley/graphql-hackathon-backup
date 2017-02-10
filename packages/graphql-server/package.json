@@ -21,7 +21,8 @@
     "build": "rm -rf __build__ && rm -rf node_modules && yarn && tsc || true",
     "lint": "tslint -c tslint.json src/**/*.ts src/*.ts test/**/*.ts test/*.ts || true",
     "test": "mocha __build__/test/**/*.spec.js || true",
-    "start": "node $NODE_DEBUG_OPTION __build__/src/graphql-server.start || true"
+    "start": "concurrently \"tsc -w\" \"nodemon --watch '__build__/**/*.js' __build__/src/graphql-server.start.js\" || true",
+    "debug": "node $NODE_DEBUG_OPTION __build__/src/graphql-server.start || true"
   },
   "repository": {
     "type": "git",

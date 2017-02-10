@@ -1,4 +1,7 @@
+import { ApolloModule } from 'apollo-angular';
 import { ApolloClient, createNetworkInterface } from 'apollo-client';
+
+export const ApolloModuleInst = ApolloModule.withClient(getClient);
 
 export function getClient() {
   return new ApolloClient({
