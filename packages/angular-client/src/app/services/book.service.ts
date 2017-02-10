@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of'
+import 'rxjs/add/observable/of';
 import { Book, bookFragment } from '../graphql';
 
 @Injectable()
@@ -47,7 +47,7 @@ export class BookService {
         id
       }
     })
-      .switchMap(result => Observable.of(result.data.book))
+      .switchMap(result => Observable.of(result.data.book));
   }
 
   /**
