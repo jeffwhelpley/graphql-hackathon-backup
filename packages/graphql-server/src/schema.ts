@@ -1,51 +1,64 @@
-import {
-    GraphQLSchema,
-    GraphQLObjectType,
-    GraphQLString,
-    GraphQLList,
-} from 'graphql';
+import { makeExecutableSchema } from 'graphql-tools';
 import { authors, books } from './db';
-import { authorType, bookType, bookInputType } from './types';
 
-const rootFields = {
-    authors: {
-        type: new GraphQLList(authorType),
-        resolve: () => {
+const schema = `
+    type Author {
+        id: String!
+        name: String!
+        image: String!
+        books: [Book]
+    }
+
+    type Book {
+        id: String!
+        title: String!
+        image: String!
+        authorId: String!
+        description: String!
+        author: Author
+    }
+
+    input BookInput {
+        id: String!
+        title: String!
+        image: String!
+        description: String!
+        authorId: String!
+    }
+
+    type QueryRoot {
+        authors: [Author]
+        books: [Book]
+        bookById(id: String!): Book
+        bookSearch(keyword: String!): Book
+        secret: String
+    }
+
+    type MutationRoot {
+        addBook(book: BookInput!): Book
+    }
+
+    schema {
+        query: QueryRoot
+        mutation: MutationRoot
+    }
+`;
+
+const resolvers = {
+    QueryRoot: {
+        authors: () => {
             return authors;
-        }
-    },
-    books: {
-        type: new GraphQLList(bookType),
-        resolve: () => {
-            // Resolve functions can return promises
+        },
+        books: () => {
             return Promise.resolve(books);
-        }
-    },
-    bookByID: {
-        type: bookType,
-        args: {
-            id: {
-                type: GraphQLString,
-            }
         },
-        resolve: (object: any, {id}: any) => {
+        bookById: (object: any, {id}: any) => {
             return books.find(book => `book-${book.id}` === id);
-        }
-    },
-    bookSearch: {
-        type: new GraphQLList(bookType),
-        args: {
-            keyword: {
-                type: GraphQLString,
-            }
         },
-        resolve: (object: any, {keyword}: any) => {
+        bookSearch: (object: any, {keyword}: any) => {
             return books.filter(book => book.title.includes(keyword));
-        }
-    },
-    secret: {
-        type: GraphQLString,
-        resolve: (object: any, args: any, context: any, {rootValue}: any) => {
+        },
+        secret: (object: any, args: any, context: any, {rootValue}: any) => {
             const user = rootValue.user;
             if (!user) {
                 return 'only authorized users can know the secret';
@@ -54,42 +67,13 @@ const rootFields = {
                 return 'howdy admin';
             }
             return 'who are you?';
-        }
+        },
     }
 };
 
-// Single "viewer" object for Relay root query compatibility
-const Viewer = new GraphQLObjectType({
-    name: 'Viewer',
-    fields: rootFields,
+const executableSchema: any = makeExecutableSchema({
+  typeDefs: schema,
+  resolvers,
 });
 
-export const schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-        name: 'QueryRoot',
-        fields: {
-            viewer: {
-                type: Viewer,
-                resolve: () => ({}),
-            },
-            ...rootFields,
-        }
-    }),
-    mutation: new GraphQLObjectType({
-        name: 'MutationRoot',
-        fields: {
-            addBook: {
-                type: bookType,
-                args: {
-                    book: {
-                        type: bookInputType,
-                    }
-                },
-                resolve: (object, {book}) => {
-                    books.push(book);
-                    return book;
-                }
-            }
-        }
-    }),
-});
+export default executableSchema;
