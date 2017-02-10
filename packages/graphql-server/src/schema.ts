@@ -17,6 +17,8 @@ const rootFields = {
     books: {
         type: new GraphQLList(bookType),
         resolve: () => {
+            var foo = books;
+
             // Resolve functions can return promises
             return Promise.resolve(books);
         }

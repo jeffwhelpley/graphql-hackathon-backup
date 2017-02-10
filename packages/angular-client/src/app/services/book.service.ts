@@ -3,38 +3,45 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of'
-import { Book } from '../graphql';
+import { Book, bookFragment } from '../graphql';
 
 @Injectable()
 export class BookService {
 
   constructor(private apollo: Apollo) {}
 
+  /**
+   * Get observable of ALL the books in the store
+   */
   getBooks(): Observable<Book[]> {
     return this.apollo.watchQuery<GetBooksQueryResult>({
       query: gql`
         {
           books {
-            id,
-            title, 
-            description,
-            author {
-              name
-            }
+            ...BookInfo
           }
         }
+        ${bookFragment}
       `
     })
-      .switchMap(result => Observable.of(result.data.books));
+      .map(result => result.data.books);
   }
 
-  // TODO: need to specify the right GraphQL queries/mutations below
-
+  /**
+   * Just get one specific book
+   * @param id
+   */
   getBookById(id: string): Observable<Book> {
     return this.apollo.query<GetBookQueryResult>({
       query: gql`
-      
+        query getBookById($id: String!) {
+          getBookById(id: $id) {
+            ...BookInfo
+          }
+        }
+        ${bookFragment}
       `,
       variables: {
         id
@@ -43,10 +50,19 @@ export class BookService {
       .switchMap(result => Observable.of(result.data.book))
   }
 
+  /**
+   * Get books that match the given keyword
+   * @param keyword search term for a book
+   */
   bookSearch(keyword): Observable<Book[]> {
     return this.apollo.query<GetBooksQueryResult>({
       query: gql`
-      
+        query bookSearch($keyword: String!) {
+          bookSearch(keyword: $keyword) {
+            ...BookInfo
+          }
+        }
+        ${bookFragment}
       `,
       variables: {
         keyword
@@ -55,10 +71,27 @@ export class BookService {
       .switchMap(result => Observable.of(result.data.books));
   }
 
+  /**
+   * Add a new book
+   * @param book The book info to be added
+   */
   addBook(book: Book): Observable<Book> {
+
+    if (!book || !book.title) {
+      throw new Error('Book must at least have a title');
+    }
+
+    console.log('book with title ' + book.title + ' is: ');
+    console.log(book);
+
     return this.apollo.mutate<GetBookQueryResult>({
       mutation: gql`
-      
+        mutation addBook($book: BookInput!) {
+          addBook(book: $book) {
+            ...BookInfo
+          }
+        }
+        ${bookFragment}
       `,
       variables: {
         book

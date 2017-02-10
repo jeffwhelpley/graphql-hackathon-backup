@@ -1,34 +1,55 @@
 import { Component, OnInit } from '@angular/core';
+import { Book } from './graphql';
 import { AuthorService, BookService } from './services';
 
 @Component({
   selector: 'app-root',
   template: `
-    <h1>Authors</h1>
+    <h2>Authors</h2>
     <ul>
       <li *ngFor="let author of authors | async">
         {{author.id}} - {{author.name}}
       </li>
     </ul>
-    <h1>Books</h1>
+    
+    <h2>Books</h2>
     <ul>
       <li *ngFor="let book of books | async">
-        {{book.title}} by {{book.author.name}}
+        {{book.title}} by {{book.author?.name}}
       </li>
     </ul>
+    
+    <h2>Add Book</h2>
+    <input type="text" [(ngModel)]="newBook.title" />
+    <input type="text" [(ngModel)]="newBook.description"  />
+    <select>
+        <option *ngFor="let author of authors | async">{{author.name}}</option>
+    </select>
+    <button (click)="addBook(newBook)">Add Book</button>
   `,
 })
 export class AppComponent implements OnInit {
-  public authors: any;
-  public books: any;
+  authors: any;
+  books: any;
+  newBook: any = {};
 
   constructor(
-    private authorService: AuthorService,
-    private bookService: BookService
+    public authorService: AuthorService,
+    public bookService: BookService
   ) {}
 
-  public ngOnInit() {
+  ngOnInit() {
     this.authors = this.authorService.getAuthors();
     this.books = this.bookService.getBooks();
   }
+
+  // todo: get UI to update automatically
+
+  addBook(book: Book) {
+    this.bookService.addBook(book)
+      .subscribe(() => {
+        this.newBook = {};
+      })
+  }
 }
+
