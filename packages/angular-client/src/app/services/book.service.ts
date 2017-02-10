@@ -26,10 +26,38 @@ export class BookService {
         }
       `
     })
-      .switchMap(result => Observable.of(result.data.books)) as any;
+      .switchMap(result => Observable.of(result.data.books));
+  }
+
+  getBookById(id: string): Observable<Book> {
+    return this.apollo.query<GetBookQueryResult>({
+      query: gql`
+      
+      `,
+      variables: {
+        id
+      }
+    })
+      .switchMap(result => Observable.of(result.data.book))
+  }
+
+  bookSearch(keyword): Observable<Book[]> {
+    return this.apollo.query<GetBooksQueryResult>({
+      query: gql`
+      
+      `,
+      variables: {
+        keyword
+      }
+    })
+      .switchMap(result => Observable.of(result.data.books))
   }
 }
 
 export interface GetBooksQueryResult {
   books: Book[];
+}
+
+export interface GetBookQueryResult {
+  book: Book;
 }
