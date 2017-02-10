@@ -5,7 +5,18 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
-import { Book, bookFragment } from '../graphql';
+import { Book } from '../graphql';
+
+export const bookFragment = gql`
+  fragment BookInfo on Book {
+    id
+    title
+    description
+    author {
+      name
+    }
+  }
+`;
 
 @Injectable()
 export class BookService {
