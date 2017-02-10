@@ -8,7 +8,7 @@ import { AuthorService, BookService } from './services';
 
 @NgModule({
   declarations: [
-    AppComponent,               // the root component needs to be declared
+    AppComponent                // the root component needs to be declared
   ],
   imports: [
     BrowserModule,

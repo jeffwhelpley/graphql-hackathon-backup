@@ -29,6 +29,8 @@ export class BookService {
       .switchMap(result => Observable.of(result.data.books));
   }
 
+  // TODO: need to specify the right GraphQL queries/mutations below
+
   getBookById(id: string): Observable<Book> {
     return this.apollo.query<GetBookQueryResult>({
       query: gql`
@@ -50,7 +52,19 @@ export class BookService {
         keyword
       }
     })
-      .switchMap(result => Observable.of(result.data.books))
+      .switchMap(result => Observable.of(result.data.books));
+  }
+
+  addBook(book: Book): Observable<Book> {
+    return this.apollo.mutate<GetBookQueryResult>({
+      mutation: gql`
+      
+      `,
+      variables: {
+        book
+      }
+    })
+      .switchMap(result => Observable.of(result.data.book));
   }
 }
 
