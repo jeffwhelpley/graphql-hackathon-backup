@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of'
-import { Author } from '../graphql';
+import { Author, authorFragment } from '../graphql';
 
 @Injectable()
 export class AuthorService {
@@ -16,13 +16,10 @@ export class AuthorService {
       query: gql`
         {
           authors {
-            id,
-            name, 
-            books { 
-              id 
-            }
+            ...AuthorInfo
           }
         }
+        ${authorFragment}
       `
     })
       .switchMap(result => Observable.of(result.data.authors)) as any;

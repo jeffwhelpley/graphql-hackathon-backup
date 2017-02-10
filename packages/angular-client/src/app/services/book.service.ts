@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of'
-import { Book } from '../graphql';
+import { Book, bookFragment } from '../graphql';
 
 @Injectable()
 export class BookService {
@@ -16,14 +16,10 @@ export class BookService {
       query: gql`
         {
           books {
-            id,
-            title, 
-            description,
-            author {
-              name
-            }
+            ...BookInfo
           }
         }
+        ${bookFragment}
       `
     })
       .switchMap(result => Observable.of(result.data.books));
@@ -34,7 +30,12 @@ export class BookService {
   getBookById(id: string): Observable<Book> {
     return this.apollo.query<GetBookQueryResult>({
       query: gql`
-      
+        query getBookById($id: String!) {
+          getBookById(id: $id) {
+            ...BookInfo
+          }
+        }
+        ${bookFragment}
       `,
       variables: {
         id
@@ -46,7 +47,12 @@ export class BookService {
   bookSearch(keyword): Observable<Book[]> {
     return this.apollo.query<GetBooksQueryResult>({
       query: gql`
-      
+        query bookSearch($keyword: String!) {
+          bookSearch(keyword: $keyword) {
+            ...BookInfo
+          }
+        }
+        ${bookFragment}
       `,
       variables: {
         keyword
@@ -58,7 +64,12 @@ export class BookService {
   addBook(book: Book): Observable<Book> {
     return this.apollo.mutate<GetBookQueryResult>({
       mutation: gql`
-      
+        mutation addBook($book: BookInput!) {
+          addBook(book: $book) {
+            ...BookInfo
+          }
+        }
+        ${bookFragment}
       `,
       variables: {
         book
